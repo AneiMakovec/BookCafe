@@ -1,0 +1,17 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSOWRD=postgres
+      - POSTGRES_DB=comment
+    ports:
+      - "5433:5432"
+  book-service:
+    image: comments-api:1.00
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/comment
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres

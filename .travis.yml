@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+language: java
+dist: bionic
+jdk:
+  - openjdk11
+cache:
+  directories:
+    - "$HOME/.m2"
+env:
+  global:
+    - DOCKER_BOOK_IMAGE=amakovec/rso-book-cafe-books:1.0.0-SNAPSHOT-$TRAVIS_JOB_NUMBER
+    - DOCKER_COMMENT_IMAGE=amakovec/rso-book-cafe-comments:1.0.0-SNAPSHOT-$TRAVIS_JOB_NUMBER
+    - DOCKER_INTERFACE_IMAGE=amakovec/rso-book-cafe-interface:1.0.0-SNAPSHOT-$TRAVIS_JOB_NUMBER
+script:
+  - mvn clean package -U
+  - docker build -t "$DOCKER_BOOK_IMAGE" ./books
+  - docker build -t "$DOCKER_COMMENT_IMAGE" ./comments
+  - docker build -t "$DOCKER_INTERFACE_IMAGE" ./interface
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push "$DOCKER_BOOK_IMAGE"
+  - docker push "$DOCKER_COMMENT_IMAGE"
+  - docker push "$DOCKER_INTERFACE_IMAGE"

@@ -1,0 +1,19 @@
+kumuluzee:
+  name: interface-service
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8082
+    http:
+      port: 8082
+  datasources:
+    - jndi-name: jdbc/UsersDS
+      connection-url: jdbc:postgresql://localhost:5434/user
+      username: postgres
+      password: postgres
+      pool:
+        max-size: 20
+  discovery:
+    etcd:
+      hosts: http://192.168.0.100:2379
