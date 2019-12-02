@@ -36,16 +36,16 @@ public class InfoResource {
         info.addMikrostoritev(commentService.getUri().toString() + "/v1/comments");
 
         // TODO: add gitHub
-        info.addGitHub("git1");
-        info.addGitHub("git2");
+        info.addGitHub("https://github.com/AneiMakovec/BookCafe");
+        info.addGitHub("https://github.com/AneiMakovec/BookCafe");
 
         // TODO: add travis
-        info.addTravis("travis1");
-        info.addTravis("travis2");
+        info.addTravis("https://travis-ci.org/AneiMakovec/BookCafe");
+        info.addTravis("https://travis-ci.org/AneiMakovec/BookCafe");
 
         // TODO: add dockerHub
-        info.addDockerHub("dockerHub1");
-        info.addDockerHub("dockerHub2");
+        info.addDockerHub("https://cloud.docker.com/repository/docker/amakovec/rso-book-cafe-books");
+        info.addDockerHub("https://cloud.docker.com/repository/docker/amakovec/rso-book-cafe-comments");
 
         return Response.ok(info).build();
     }
