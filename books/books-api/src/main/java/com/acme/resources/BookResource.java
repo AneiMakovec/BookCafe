@@ -16,7 +16,7 @@ import java.util.List;
 @RequestScoped
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/books")
+@Path("books")
 public class BookResource {
 
     @Inject

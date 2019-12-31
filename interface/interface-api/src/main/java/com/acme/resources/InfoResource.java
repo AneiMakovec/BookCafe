@@ -1,5 +1,6 @@
 package com.acme.resources;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,15 +17,16 @@ import java.util.Optional;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("info")
+@RequestScoped
 public class InfoResource {
 
     @Inject
     @DiscoverService(value = "book-service", environment = "dev", version = "*")
-    private WebTarget bookService;
+    private Optional<WebTarget> bookTarget;
 
     @Inject
     @DiscoverService(value = "comment-service", environment = "dev", version = "*")
-    private WebTarget commentService;
+    private Optional<WebTarget> commentTarget;
 
     @GET
     public Response getInfo() {
@@ -32,8 +34,13 @@ public class InfoResource {
 
         info.addClan("am7761");
 
-        info.addMikrostoritev(bookService.getUri().toString() + "/v1/books");
-        info.addMikrostoritev(commentService.getUri().toString() + "/v1/comments");
+        if (bookTarget.isPresent() && commentTarget.isPresent()) {
+            WebTarget bookService = bookTarget.get().path("v1/books");
+            WebTarget commentService = commentTarget.get().path("v1/comments");
+
+            info.addMikrostoritev(bookService.getUri().toString());
+            info.addMikrostoritev(commentService.getUri().toString());
+        }
 
         // TODO: add gitHub
         info.addGitHub("https://github.com/AneiMakovec/BookCafe");
