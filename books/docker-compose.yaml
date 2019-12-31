@@ -8,7 +8,7 @@ services:
     ports:
       - "5432:5432"
   book-service:
-    image: books-api:1.00
+    image: amakovec/rso-book-cafe-books:1.0.0-SNAPSHOT-8.1
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/book
     ports:
