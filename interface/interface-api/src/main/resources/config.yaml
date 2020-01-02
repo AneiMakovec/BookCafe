@@ -4,9 +4,9 @@ kumuluzee:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:80
+    base-url: http://localhost:8080
     http:
-      port: 80
+      port: 8080
   datasources:
     - jndi-name: jdbc/UsersDS
       connection-url: jdbc:postgresql://interface-db:5432/user
