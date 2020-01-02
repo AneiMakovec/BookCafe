@@ -4,16 +4,16 @@ kumuluzee:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8082
+    base-url: http://localhost:80
     http:
-      port: 8082
+      port: 80
   datasources:
     - jndi-name: jdbc/UsersDS
-      connection-url: jdbc:postgresql://localhost:5434/user
+      connection-url: jdbc:postgresql://interface-db:5432/user
       username: postgres
       password: postgres
       pool:
         max-size: 20
   discovery:
     etcd:
-      hosts: http://127.0.0.1:2379
+      hosts: http://etcd:2379
