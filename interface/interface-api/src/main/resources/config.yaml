@@ -19,9 +19,9 @@ kumuluzee:
     - data-source-health-check:
         type: liveness
         jndi-name: jdbc/UsersDS
-#        connection-url: jdbc:postgresql://interface-db:5432/user
-#        username: postgres
-#        password: postgres
+        connection-url: jdbc:postgresql://interface-db:5432/user
+        username: postgres
+        password: postgres
     - etcd-health-check:
         type: readiness
         connection-url: http://etcd:2379

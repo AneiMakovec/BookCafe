@@ -19,9 +19,9 @@ kumuluzee:
     - data-source-health-check:
         type: liveness
         jndi-name: jdbc/CommentsDS
-#        connection-url: jdbc:postgresql://comments-db:5432/comment
-#        username: postgres
-#        password: postgres
+        connection-url: jdbc:postgresql://comments-db:5432/comment
+        username: postgres
+        password: postgres
     - etcd-health-check:
         type: readiness
         connection-url: http://etcd:2379
