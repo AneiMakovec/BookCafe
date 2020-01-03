@@ -19,6 +19,9 @@ kumuluzee:
     - data-source-health-check:
         type: liveness
         jndi-name: jdbc/BooksDS
+#        connection-url: jdbc:postgresql://books-db:5432/book
+#        username: postgres
+#        password: postgres
     - etcd-health-check:
         type: readiness
         connection-url: http://etcd:2379
