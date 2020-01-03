@@ -6,9 +6,9 @@ services:
       - POSTGRES_PASSOWRD=postgres
       - POSTGRES_DB=book
     ports:
-      - "5432:5432"
+      - "5433:5432"
   book-service:
-    image: amakovec/rso-book-cafe-books:1.0.0-SNAPSHOT-8.1
+    image: books-v1:latest
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/book
     ports:

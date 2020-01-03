@@ -23,13 +23,10 @@ kumuluzee:
       level: INFO
       period-s: 30
     checks:
-    - data-source-health-check:
+      data-source-health-check:
         type: liveness
         jndi-name: jdbc/UsersDS
-#        connection-url: jdbc:postgresql://interface-db:5432/user
-#        username: postgres
-#        password: postgres
-    - etcd-health-check:
+      etcd-health-check:
         type: readiness
         connection-url: http://etcd:2379
   discovery:
