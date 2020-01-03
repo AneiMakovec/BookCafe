@@ -16,7 +16,7 @@ kumuluzee:
         max-size: 20
   health:
     servlet:
-      mapping: /health
+      mapping: /health/*
       enabled: true
     logs:
       enabled: true
