@@ -15,13 +15,20 @@ kumuluzee:
       pool:
         max-size: 20
   health:
+    servlet:
+      mapping: /health
+      enabled: true
+    logs:
+      enabled: true
+      level: INFO
+      period-s: 30
     checks:
     - data-source-health-check:
         type: liveness
         jndi-name: jdbc/CommentsDS
-        connection-url: jdbc:postgresql://comments-db:5432/comment
-        username: postgres
-        password: postgres
+#        connection-url: jdbc:postgresql://comments-db:5432/comment
+#        username: postgres
+#        password: postgres
     - etcd-health-check:
         type: readiness
         connection-url: http://etcd:2379
