@@ -11,12 +11,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.acme.info.Info;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import com.kumuluz.ee.logs.cdi.Log;
+import com.kumuluz.ee.logs.cdi.LogParams;
 
 import java.util.Optional;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("info")
+@Log(LogParams.METRICS)
 @RequestScoped
 public class InfoResource {
 
@@ -29,6 +32,7 @@ public class InfoResource {
     private Optional<WebTarget> commentTarget;
 
     @GET
+    @Log(value = LogParams.METRICS, methodCall = true)
     public Response getInfo() {
         Info info = new Info("Projekt implementira aplikacijo za diskutiranje in komentiranje knjig.");
 

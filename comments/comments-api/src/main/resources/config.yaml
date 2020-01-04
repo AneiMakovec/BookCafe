@@ -29,6 +29,13 @@ kumuluzee:
       etcd-health-check:
         type: readiness
         connection-url: http://etcd:2379
+  metrics:
+    servlet:
+      enabled: true
+      mapping: /metrics/*
+    web-instrumentation:
+      - name: commentsEndpoint
+        url-pattern: /v1/comments/*
   discovery:
     etcd:
       hosts: http://etcd:2379

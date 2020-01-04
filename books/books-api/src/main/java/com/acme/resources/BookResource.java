@@ -2,6 +2,8 @@ package com.acme.resources;
 
 import com.acme.beans.BooksBean;
 import com.acme.books.Book;
+import com.kumuluz.ee.logs.cdi.Log;
+import com.kumuluz.ee.logs.cdi.LogParams;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -17,12 +19,14 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("books")
+@Log(LogParams.METRICS)
 public class BookResource {
 
     @Inject
     private BooksBean booksBean;
 
     @GET
+    @Log(value = LogParams.METRICS, methodCall = true)
     public Response getAllBooks() {
         List<Book> books = booksBean.getBooks();
         return Response.ok(books).build();
