@@ -1,6 +1,6 @@
 package com.acme.resources;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.client.WebTarget;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("app")
 @Log(LogParams.METRICS)
-@SessionScoped
+@RequestScoped
 public class AppResource implements Serializable {
 
     private User user = null;
