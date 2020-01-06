@@ -63,6 +63,11 @@
             <artifactId>kumuluzee-logs-log4j2</artifactId>
             <version>${kumuluz-logs.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.fault.tolerance</groupId>
+            <artifactId>kumuluzee-fault-tolerance-smallrye</artifactId>
+            <version>${kumuluzee-fault-tolerance.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

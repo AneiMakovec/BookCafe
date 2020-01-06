@@ -8,7 +8,7 @@ services:
     ports:
       - "5434:5432"
   book-service:
-    image: amakovec/rso-book-cafe-interface:1.0.0-SNAPSHOT-8.1
+    image: interface-v1:latest
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/user
     ports:

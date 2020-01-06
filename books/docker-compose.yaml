@@ -6,7 +6,7 @@ services:
       - POSTGRES_PASSOWRD=postgres
       - POSTGRES_DB=book
     ports:
-      - "5433:5432"
+      - "5432:5432"
   book-service:
     image: books-v1:latest
     environment:

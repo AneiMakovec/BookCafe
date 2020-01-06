@@ -9,7 +9,7 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/BooksDS
-      connection-url: jdbc:postgresql://books-db:5432/book
+      connection-url: jdbc:postgresql://localhost:5432/book
       username: postgres
       password: postgres
       pool:
@@ -28,7 +28,7 @@ kumuluzee:
         jndi-name: jdbc/BooksDS
       etcd-health-check:
         type: readiness
-        connection-url: http://etcd:2379
+        connection-url: http://0.0.0.0:2379/health
   metrics:
     servlet:
       enabled: true
@@ -38,4 +38,4 @@ kumuluzee:
         url-pattern: /v1/books/*
   discovery:
     etcd:
-      hosts: http://etcd:2379
+      hosts: http://0.0.0.0:2379
