@@ -1,9 +1,15 @@
 package com.acme.comments;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.WRAPPER_OBJECT;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 
 @Entity
 @Table(name = "comments")
@@ -21,30 +27,32 @@ import java.util.Date;
                 query = "SELECT c FROM Comment c WHERE c.bookId = " + ":bookId"
         )
 })
+@JsonTypeName("comment")
+@JsonTypeInfo(include = WRAPPER_OBJECT, use = NAME)
 public class Comment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int comment_id;
+    private int commentId;
 
     @Column(name = "content")
     private String content;
 
     @Temporal(TemporalType.TIME)
-    @Column(name = "created_timestamp")
+    @Column(name = "createdTimestamp")
     private Date createdTimestamp;
 
-    @Column(name = "book_id")
+    @Column(name = "bookId")
     private int bookId;
 
-    @Column(name = "user_id")
+    @Column(name = "userId")
     private int userId;
 
 
 
-    public int getComment_id() { return comment_id; }
+    public int getCommentId() { return commentId; }
 
-    public void setComment_id(int comment_id) { this.comment_id = comment_id; }
+    public void setCommentId(int commentId) { this.commentId = commentId; }
 
     public String getContent() { return content; }
 

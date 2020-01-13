@@ -16,6 +16,11 @@
             <AppenderRef ref="logstash"/>
         </Logger>
 
+        <Logger name="com.acme.resources.AppResource" level="trace" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="logstash"/>
+        </Logger>
+
         <!-- Default logger -->
         <Root level="info">
             <AppenderRef ref="console"/>

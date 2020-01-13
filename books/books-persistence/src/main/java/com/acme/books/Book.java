@@ -1,23 +1,44 @@
 package com.acme.books;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Date;
+
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.WRAPPER_OBJECT;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 
 @Entity
 @Table(name = "books")
 @NamedQueries({
         @NamedQuery(
                 name = "Book.findBooks",
-                query = "SELECT b " +
-                        "FROM Book b"
+                query = "SELECT b FROM Book b"
+        ),
+        @NamedQuery(
+                name = "Book.findByTitle",
+                query = "SELECT b FROM Book b WHERE b.title = " + ":title"
+        ),
+        @NamedQuery(
+                name = "Book.findByAuthor",
+                query = "SELECT b FROM Book b WHERE b.author = " + ":author"
+        ),
+        @NamedQuery(
+                name = "Book.findByPublisher",
+                query = "SELECT b FROM Book b WHERE b.publisher = " + ":publisher"
         )
 })
+@JsonTypeName("book")
+@JsonTypeInfo(include = WRAPPER_OBJECT, use = NAME)
 public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int book_id;
+    private int bookId;
 
     @Column(name = "title")
     private String title;
@@ -28,20 +49,20 @@ public class Book implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "num_pages")
+    @Column(name = "numPages")
     private int numPages;
 
     @Column(name = "publisher")
     private String publisher;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "publish_date")
+    @Column(name = "publishDate")
     private Date publishDate;
 
 
-    public int getId() { return book_id; }
+    public int getId() { return bookId; }
 
-    public void setId(int id) { this.book_id = id; }
+    public void setId(int id) { this.bookId = id; }
 
     public String getTitle() { return title; }
 

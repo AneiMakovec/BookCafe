@@ -4,6 +4,7 @@
         <non-jta-data-source>jdbc/UsersDS</non-jta-data-source>
 
         <class>com.acme.users.User</class>
+        <class>com.acme.users.Favourite</class>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

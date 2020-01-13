@@ -28,7 +28,7 @@ kumuluzee:
         jndi-name: jdbc/UsersDS
       etcd-health-check:
         type: readiness
-        connection-url: http://0.0.0.0:2379/health
+        connection-url: http://localhost:2379/health
   metrics:
     servlet:
       enabled: true
@@ -37,5 +37,17 @@ kumuluzee:
       - name: infoEndpoint
         url-pattern: /v1/info/*
   discovery:
+    cluster: bookcafe
     etcd:
-      hosts: http://0.0.0.0:2379
+      hosts: http://localhost:2379
+  streaming:
+    kafka:
+      producer:
+        bootstrap-servers: localhost:9092
+        acks: all
+        retries: 0
+        batch-size: 16384
+        linger-ms: 1
+        buffer-memory: 33554432
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer

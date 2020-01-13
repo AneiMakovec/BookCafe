@@ -48,5 +48,7 @@
         <kumuluzee-metrics.version>2.0.1</kumuluzee-metrics.version>
         <kumuluz-logs.version>1.3.1</kumuluz-logs.version>
         <kumuluzee-fault-tolerance.version>2.0.1</kumuluzee-fault-tolerance.version>
+        <kumuluzee-cors.version>1.0.5</kumuluzee-cors.version>
+        <kumuluzee-streaming.version>1.2.0</kumuluzee-streaming.version>
     </properties>
 </project>

@@ -28,7 +28,7 @@ kumuluzee:
         jndi-name: jdbc/CommentsDS
       etcd-health-check:
         type: readiness
-        connection-url: http://0.0.0.0:2379/health
+        connection-url: http://localhost:2379/health
   metrics:
     servlet:
       enabled: true
@@ -37,5 +37,6 @@ kumuluzee:
       - name: commentsEndpoint
         url-pattern: /v1/comments/*
   discovery:
+    cluster: bookcafe
     etcd:
-      hosts: http://0.0.0.0:2379
+      hosts: http://localhost:2379

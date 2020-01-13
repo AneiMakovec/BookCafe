@@ -4,7 +4,9 @@ import com.acme.users.User;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -16,6 +18,16 @@ public class UsersBean {
 
     public User get(int userId) {
         return em.find(User.class, userId);
+    }
+
+    public User getByName(String name) {
+        try {
+            Query q = em.createNamedQuery("User.findByName", User.class);
+            q.setParameter("username", name);
+            return (User) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public List<User> getUsers() {

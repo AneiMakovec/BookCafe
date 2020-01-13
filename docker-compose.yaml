@@ -1,0 +1,164 @@
+version: "3"
+services:
+#  reverseproxy:  # see https://docs.traefik.io/#the-traefik-quickstart-using-docker
+#    image: traefik
+#    command: --providers.docker
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    networks:
+#      - internal
+#      - proxy
+  etcd:
+    image: quay.io/coreos/etcd:latest
+    expose:
+      - 2379
+      - 2380
+    volumes:
+      - etcd_data:/etcd-data
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+    command:
+      - /usr/local/bin/etcd
+      - --data-dir=/etcd-data
+      - --name
+      - etcd
+      - --listen-client-urls
+      - http://0.0.0.0:2379
+      - --advertise-client-urls
+      - http://0.0.0.0:2379
+      - --listen-peer-urls
+      - http://0.0.0.0:2380
+      - --initial-advertise-peer-urls
+      - http://0.0.0.0:2380
+      - --initial-cluster
+      - etcd=http://0.0.0.0:2380
+      - --initial-cluster-token
+      - etcd-token
+      - --initial-cluster-state
+      - new
+      - --auto-compaction-retention
+      - '1'
+      - -cors="*"
+#    networks:
+#      - proxy
+#      - internal
+#    labels:
+#      - traefik.enable=false
+  books-postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSOWRD=postgres
+      - POSTGRES_DB=book
+    ports:
+      - "5432:5432"
+#    networks:
+#      - internal
+#    labels:
+#      - traefik.enable=false
+  comment-postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSOWRD=postgres
+      - POSTGRES_DB=comment
+    ports:
+      - "5433:5432"
+#    networks:
+#      - internal
+#    labels:
+#      - traefik.enable=false
+  interface-postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSOWRD=postgres
+      - POSTGRES_DB=account
+    ports:
+      - "5434:5432"
+#    networks:
+#      - internal
+#    labels:
+#      - traefik.enable=false
+  book-service:
+    image: books-v1:latest
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://books-postgres:5432/book
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_HEALTH_CHECKS_ETCDHEALTHCHECK_CONNECTIONURL=http://etcd:2379/health
+    ports:
+      - "8080:8080"
+    depends_on:
+      - books-postgres
+      - etcd
+#      - reverseproxy
+#    labels:
+#      - traefik.frontend.rule=PathPrefixStrip:/book
+#      - traefik.docker.network=proxy
+#      - traefik.port=8080
+#    networks:
+#      - internal
+#      - proxy
+  comment-service:
+    image: comments-v1:latest
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://comment-postgres:5432/comment
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_HEALTH_CHECKS_ETCDHEALTHCHECK_CONNECTIONURL=http://etcd:2379/health
+    ports:
+      - "8081:8081"
+    depends_on:
+      - comment-postgres
+      - etcd
+#      - reverseproxy
+#    labels:
+#      - traefik.frontend.rule=PathPrefixStrip:/comment
+#      - traefik.docker.network=proxy
+#      - traefik.port=8081
+#    networks:
+#      - internal
+#      - proxy
+  interface-service:
+    image: interface-v1:latest
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://interface-postgres:5432/account
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_HEALTH_CHECKS_ETCDHEALTHCHECK_CONNECTIONURL=http://etcd:2379/health
+    ports:
+      - "8082:8082"
+    depends_on:
+      - interface-postgres
+      - etcd
+#      - reverseproxy
+#    labels:
+#      - traefik.frontend.rule=PathPrefixStrip:/app
+#      - traefik.docker.network=proxy
+#      - traefik.port=8082
+#    networks:
+#      - internal
+#      - proxy
+#  frontend-service:
+#    image: frontend-v1:latest
+#    volumes:
+#      - "./frontend:/app"
+#    ports:
+#      - "4200:4200"
+#    depends_on:
+#      - book-service
+#      - comment-service
+#      - interface-service
+#      - reverseproxy
+#    labels:
+#      - traefik.frontend.rule=PathPrefixStrip:/ui;PathPrefix:/ui
+#      - traefik.docker.network=proxy
+#      - traefik.port=4200
+#    networks:
+#      - internal
+#      - proxy
+volumes:
+  etcd_data:
+    driver: local
+#networks:
+#  proxy:
+#    external: true
+#  internal:
+#    external: false

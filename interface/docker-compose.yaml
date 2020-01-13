@@ -7,10 +7,12 @@ services:
       - POSTGRES_DB=user
     ports:
       - "5434:5432"
-  book-service:
+  interface-service:
     image: interface-v1:latest
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/user
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_HEALTH_CHECKS_ETCDHEALTHCHECK_CONNECTIONURL=http://etcd:2379/health
     ports:
       - "8082:8082"
     depends_on:

@@ -37,8 +37,12 @@ public class CommentsBean {
 
     @Transactional
     public void saveComment(Comment comment) {
-        if (comment != null)
+        if (comment != null) {
+            em.getTransaction().begin();
             em.persist(comment);
+            em.getTransaction().commit();
+            em.flush();
+        }
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

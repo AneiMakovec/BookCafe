@@ -7,10 +7,12 @@ services:
       - POSTGRES_DB=comment
     ports:
       - "5433:5432"
-  book-service:
+  comment-service:
     image: comments-v1:latest
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/comment
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_HEALTH_CHECKS_ETCDHEALTHCHECK_CONNECTIONURL=http://etcd:2379/health
     ports:
       - "8081:8081"
     depends_on:

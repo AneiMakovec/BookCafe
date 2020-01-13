@@ -1,0 +1,58 @@
+<h2>{{book.book.title}}</h2>
+<table>
+  <tr>
+    <td><label for="author">Author:</label></td>
+    <td><label id="author">{{book.book.author}}</label></td>
+  </tr>
+  <tr>
+    <td><label for="publisher">Publisher:</label></td>
+    <td><label id="publisher">{{book.book.publisher}}</label></td>
+  </tr>
+  <tr>
+    <td><label for="numPages">Number of pages:</label></td>
+    <td><label id="numPages">{{book.book.numPages}}</label></td>
+  </tr>
+  <tr>
+    <td><label for="description">Description:</label></td>
+    <td><label id="description">{{book.book.description}}</label></td>
+  </tr>
+</table>
+<br>
+<br>
+<h3>Comments:</h3>
+<table>
+  <tr *ngFor="let comment of comments">
+    <td><label for="com">Anonymous: </label></td>
+    <td><label id="com">{{comment.comment.content}}</label></td>
+  </tr>
+<!--  <tbody ng-repeat="c in comments">-->
+<!--    <td><label for="com">Anonymous</label></td>-->
+<!--    <td><label id="com">{{c.comment.content}}</label></td>-->
+<!--  </tbody>-->
+</table>
+<!--<table mat-table [dataSource]="comments" class="Comment">-->
+<!--  <ng-container matColumnDef="name">-->
+<!--    <th mat-header-cell *matHeaderCellDef> User </th>-->
+<!--    <td mat-cell *matCellDef="let comment"> Anonymous </td>-->
+<!--  </ng-container>-->
+<!--  <ng-container matColumnDef="comment">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Comment </th>-->
+<!--    <td mat-cell *matCellDef="let comment"> {{comment.content}} </td>-->
+<!--  </ng-container>-->
+
+<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--  <tr mat-row *matRowDef="let comment; columns: displayedColumns;"></tr>-->
+<!--</table>-->
+<br>
+<br>
+<form (ngSubmit)="addComment()" ngNativeValidate>
+  <table>
+    <tr>
+      <td><label for="inputComment">Comment: </label></td>
+      <td><input [(ngModel)]="comment.comment.content" id="inputComment" name="inputComment" required/></td>
+    </tr>
+  </table>
+
+  <button type="submit">Post comment</button>
+</form>
+<button type="button" (click)="back()">Back</button>
