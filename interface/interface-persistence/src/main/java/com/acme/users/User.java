@@ -25,7 +25,6 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
                         "WHERE u.username = " + ":username"
         )
 })
-@XmlRootElement
 @JsonTypeName("user")
 @JsonTypeInfo(include = WRAPPER_OBJECT, use = NAME)
 public class User implements Serializable {
